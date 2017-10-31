@@ -27,6 +27,8 @@
                             <button name="generate_file" type="object" string="Generate file"/>
                             <field name="txt_filename" invisible="1"/>
                             <field name="txt_binary" filename="txt_filename" readonly="1"/>
+                            <field name="adr_screen" readonly="1"/>
+                            <field name="rev_screen" readonly="1"/>
                             </div>
                         </sheet>
                     </form>
