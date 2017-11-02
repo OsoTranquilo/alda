@@ -265,38 +265,10 @@ class Wizard(models.TransientModel):
             ET.SubElement(precios,"ADR_OTROS").text = '0'
             ET.SubElement(precios,"PCTN_HABITACIONES_OCUPADAS_OTROS").text = '0'
            
-
-
-
-
             personal = ET.SubElement(encuesta, "PERSONAL_OCUPADO")
             ET.SubElement(personal,"PERSONAL_NO_REMUNERADO").text = '0'
             ET.SubElement(personal,"PERSONAL_REMUNERADO_FIJO").text = str(compan.permanentstaff)
             ET.SubElement(personal,"PERSONAL_REMUNERADO_EVENTUAL").text = str(compan.eventualstaff)
-
-            #seguimiento = ET.SubElement(encuesta, "seguimiento_variables")
-            #ET.SubElement(seguimiento,"month_end_date").text = str(month_end_date)
-            #ET.SubElement(seguimiento,"month_first_date").text = str(month_first_date)
-            # for x,y in enumerate(ine_entrada):
-            #     ET.SubElement(seguimiento,"ENTRADAS_"+str(x)).text = str(y)
-            # for x,y in enumerate(ine_salidas):
-            #     ET.SubElement(seguimiento,"Salidas_"+str(x)).text = str(y)
-            # for x,y in enumerate(ine_pernoct):
-            #     ET.SubElement(seguimiento,"Pernoctaciones_"+str(x)).text = str(y)
-            # ET.SubElement(seguimiento,"Primerdiadelmesbuscado").text = str(m_f_d_search)
-            # ET.SubElement(seguimiento,"Ultidiadelmesbuscado").text = str(m_e_d_search)
-            # ET.SubElement(seguimiento,"last_day").text = str(last_day)
-            # ET.SubElement(seguimiento,"Entrada").text = str(lines[0].enter_date)
-            # ET.SubElement(seguimiento,"CodeControl").text = str(lines[0].partner_id.code_ine.code)
-            # ET.SubElement(seguimiento,"Capacidad").text = str(lines[0].reservation_id.capacity)
-            # ET.SubElement(seguimiento,"Adultos").text = str(lines[0].reservation_id.adults)
-            # ET.SubElement(seguimiento,"Ninos").text = str(lines[0].reservation_id.children)
-            # ET.SubElement(seguimiento,"habitacion").text = str(lines[0].reservation_id.product_id)
-
-            # room = self.env['hotel.room'].search([('product_id','=',lines[0].reservation_id.product_id.id)])
-            # ET.SubElement(seguimiento,"habitacion").text = str(room)
-            # ET.SubElement(seguimiento,"Capacity").text = str(room.capacity)
-            # ET.SubElement(seguimiento,"Numero").text = str(room.name)
 
             tree = ET.ElementTree(encuesta)
 
@@ -305,8 +277,8 @@ class Wizard(models.TransientModel):
             file=base64.encodestring( xmlstr )
             return self.write({
                  'txt_filename': 'INE_'+str(self.ine_month)+'_'+str(self.ine_year) +'.'+ 'xml',
-                 'adr_screen' : 'El ADR en el mes de la encuesta asciende a '+str(round(month_adr_sum/month_adr_rooms,2))+'€',
-                 'rev_screen' : 'El RevPar asciende a '+str(round(month_adr_sum/month_revpar_staff_rooms,2))+'€',
+                 'adr_screen' : 'ADR en el mes de la encuesta: '+str(round(month_adr_sum/month_adr_rooms,2))+'€',
+                 'rev_screen' : 'RevPar : '+str(round(month_adr_sum/month_revpar_staff_rooms,2))+'€',
                  'txt_binary': base64.encodestring(xmlstr)
                  })
         else:
