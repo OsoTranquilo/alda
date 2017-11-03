@@ -13,7 +13,6 @@
                             <field name="property_name" />
                             <field name="tourism" />
                             <field name="category_id" widget="selection"/>
-                            <field name="rooms" />
                             <field name="seats" />
                             <field name="permanentstaff" />
                             <field name="eventualstaff" />
