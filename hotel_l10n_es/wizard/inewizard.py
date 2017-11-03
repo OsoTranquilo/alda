@@ -57,7 +57,7 @@ class Wizard(models.TransientModel):
             compan = self.env.user.company_id
 
             encuesta = ET.Element("ENCUESTA")
-            cabezera = ET.SubElement(encuesta, "CABEZERA")
+            cabezera = ET.SubElement(encuesta, "CABECERA")
             fecha = ET.SubElement(cabezera,"FECHA_REFERENCIA")
             ET.SubElement(fecha, "MES").text = '{:02d}'.format(self.ine_month)
             ET.SubElement(fecha, "ANYO").text = str(self.ine_year)
@@ -65,7 +65,7 @@ class Wizard(models.TransientModel):
             ET.SubElement(cabezera,"DIAS_ABIERTO_MES_REFERENCIA").text = str(month_end_date.day)
             ET.SubElement(cabezera,"RAZON_SOCIAL").text = compan.name
             ET.SubElement(cabezera,"NOMBRE_ESTABLECIMIENTO").text = compan.property_name
-            ET.SubElement(cabezera,"CIF_NIF").text = compan.vat
+            ET.SubElement(cabezera,"CIF_NIF").text = compan.vat[2:]
             ET.SubElement(cabezera,"NUMERO_REGISTRO").text = compan.tourism
             ET.SubElement(cabezera,"DIRECCION").text = compan.street
             ET.SubElement(cabezera,"CODIGO_POSTAL").text = compan.zip
@@ -94,16 +94,16 @@ class Wizard(models.TransientModel):
 
             #Cabezera
             code_control = lines[0].partner_id.code_ine.code
-            alojamiento = ET.SubElement(encuesta, "RESIDENCIA")
+            residencia = ET.SubElement(alojamiento, "RESIDENCIA")
 
             for linea in lines:
                 #Si ha cambiado el codigo
                 if code_control<>linea.partner_id.code_ine.code:
-                    ET.SubElement(alojamiento,"ID_PROVINCIA_ISLA").text = str(code_control)
-                    movimiento = ET.SubElement(alojamiento, "MOVIMIENTO")
+                    ET.SubElement(residencia,"ID_PROVINCIA_ISLA").text = str(code_control)
 
                     for x in xrange(1,last_day+1):
                         if ine_entrada[x]+ine_salidas[x]+ine_pernoct[x] > 0:
+                            movimiento = ET.SubElement(residencia, "MOVIMIENTO")
                             ET.SubElement(movimiento,"N_DIA").text = "%02d" % (x)
                             ET.SubElement(movimiento,"ENTRADAS").text = str(ine_entrada[x])
                             ET.SubElement(movimiento,"SALIDAS").text = str(ine_salidas[x])
@@ -232,11 +232,12 @@ class Wizard(models.TransientModel):
                             movimientos[int(xx_dia[2])][6]-= 1
 
             for xx in xrange(1,last_day+1):
-                ET.SubElement(habitaciones,"HABITACIONES_N_DIA").text = "%02d" % (xx)
-                ET.SubElement(habitaciones,"PLAZAS_SUPLETORIAS").text = str(movimientos[xx][0])
-                ET.SubElement(habitaciones,"HABITACIONES_DOBLES_USO_DOBLE").text = str(movimientos[xx][1])
-                ET.SubElement(habitaciones,"HABITACIONES_DOBLES_USO_INDIVIDUAL").text = str(movimientos[xx][2])
-                ET.SubElement(habitaciones,"HABITACIONES_OTRAS").text = str(movimientos[xx][3])
+                habitaciones_m = ET.SubElement(habitaciones,"HABITACIONES_MOVIMIENTO")
+                ET.SubElement(habitaciones_m,"HABITACIONES_N_DIA").text = "%02d" % (xx)
+                ET.SubElement(habitaciones_m,"PLAZAS_SUPLETORIAS").text = str(movimientos[xx][0])
+                ET.SubElement(habitaciones_m,"HABITACIONES_DOBLES_USO_DOBLE").text = str(movimientos[xx][1])
+                ET.SubElement(habitaciones_m,"HABITACIONES_DOBLES_USO_INDIVIDUAL").text = str(movimientos[xx][2])
+                ET.SubElement(habitaciones_m,"HABITACIONES_OTRAS").text = str(movimientos[xx][3])
 
                 #calculo ADR
                 month_adr_sum += movimientos[xx][4]
