@@ -15,7 +15,7 @@
                 <field name="arch" type="xml">
                     <form>
                         <sheet>
-                            <group> 
+                            <group string="Generar estadistica para el INE"> 
                                 <div>
                                     <label for="ine_month" string="Select Month and Year"
                                            style="font-weight: bold !important;margin-right:107px;margin-left: 0px;"/> 
@@ -25,11 +25,16 @@
                             </group>
                             <div>
                             <button name="generate_file" type="object" string="Generate file"/>
-                            <field name="txt_filename" invisible="1"/>
-                            <field name="txt_binary" filename="txt_filename" readonly="1"/>
-                            <field name="adr_screen" readonly="1"/>
-                            <field name="rev_screen" readonly="1"/>
+                                <field name="txt_filename" invisible="1"/>
+                                <field name="txt_binary" filename="txt_filename" readonly="1"/>
                             </div>
+                            <separator string="ADR y RevPar"/>
+                            <group> 
+                                <div>
+                                    <field name="adr_screen" readonly="1"/>
+                                    <field name="rev_screen" readonly="1"/>
+                                </div>  
+                            </group>                            
                         </sheet>
                     </form>
                 </field>
