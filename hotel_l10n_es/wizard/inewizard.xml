@@ -15,7 +15,7 @@
                 <field name="arch" type="xml">
                     <form>
                         <sheet>
-                            <group string="Generar estadistica para el INE" colspan="1">  
+                            <group string="Generar estadistica para el I.N.E." colspan="1">  
                                     <field name="ine_year" style="width:110px;"/>
                                     <field name="ine_month" style="width:110px"/>
                             </group>
